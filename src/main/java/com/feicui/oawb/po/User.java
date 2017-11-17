@@ -24,6 +24,7 @@ public class User {
 	private String sex;//性别
 	private int deptID;//所在部门
 	private String companyID;//所在公司
+	private int isDeleted;//是否删除,0:未删除,1:删除
 	
 	public User(){}
 
@@ -153,6 +154,13 @@ public class User {
 
 	public void setCompanyID(String companyID) {
 		this.companyID = companyID;
+	}
+	public int getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(int isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	@Override

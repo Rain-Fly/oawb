@@ -32,5 +32,10 @@
 			FROM user_role 
 			WHERE account=#{account}))
 	</select>
+	
+	<!-- 查询所有用户信息 -->
+	<select id="queryAllUsers" resultType="user">
+		select * from user where isDeleted=0
+	</select>
 
 </mapper>

@@ -32,22 +32,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<a href="${pageContext.request.contextPath }/admin/insertDepartment.jsp">添加部门</a>
     	</li>
     	<li>
-    		<a>修改部门</a>
-    	</li>
-    	<li>
-    		<a>删除部门</a>
+    		<a href="${pageContext.request.contextPath }/department/queryAllDepartments">部门管理</a>
     	</li>
     </ul>
     <strong>公司管理</strong>
     <ul>
     	<li>
-    		<a>添加公司</a>
+    		<a href="${pageContext.request.contextPath }/company/toInsertCompany">添加公司</a>
     	</li>
     	<li>
-    		<a>修改公司</a>
-    	</li>
-    	<li>
-    		<a>删除公司</a>
+    		<a href="${pageContext.request.contextPath }/company/queryAllCompanies">管理公司</a>
     	</li>
     </ul>
     <strong>用户管理</strong>
@@ -56,10 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<a>添加用户</a>
     	</li>
     	<li>
-    		<a>修改用户</a>
-    	</li>
-    	<li>
-    		<a>删除用户</a>
+    		<a>管理用户</a>
     	</li>
     </ul>
   </body>

@@ -17,6 +17,7 @@ public class UserRole {
 	private Date updateTime;//最后一次修改时间
 	private Date createDate;//创建日期
 	private Date updateDate;//最后一次修改日期
+	private int isDeleted;//是否删除,0:未删除,1:删除
 	
 	public UserRole(){}
 
@@ -90,6 +91,13 @@ public class UserRole {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+	public int getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(int isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	@Override

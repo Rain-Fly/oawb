@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.feicui.oawb.dao.CompanyMapper">
+	
+	<!-- 添加公司 -->
+	<insert id="insertCompany" parameterType="company">
+		INSERT INTO company(id,NAME,address,linkMan,tel,author,updater,createtime,createDate,updateDate)
+		VALUES(#{id},#{name},#{address},#{linkMan},#{tel},#{author},
+				#{updater},#{createTime},#{createDate},#{updateDate})
+	</insert>
+	
+	<!-- 修改公司信息 -->
+	<update id="updateCompany" parameterType="company">
+		update company 
+		set id=#{id},name=#{name},address=#{address},linkMan=#{linkMan},tel=#{tel},updater=#{updater},updateDate=#{updateDate}
+		where id=#{id}
+	</update>
+	
+	<!-- 根据公司id查询公司信息 -->
+	<select id="queryCompanyById" parameterType="string" resultType="company">
+		SELECT * FROM company WHERE id=#{id}
+	</select>
+	
+	<!-- 根据公司id删除公司 -->
+	<update id="deleteCompany" parameterType="company">
+		UPDATE company SET isDeleted=1,updater=#{updater},updateDate=#{updateDate} WHERE id=#{id}
+	</update>
+	
+	<!-- 查询所有公司信息 -->
+	<select id="queryAllCompanies" resultType="company">
+		SELECT * FROM company WHERE isDeleted=0
+	</select>
+</mapper>

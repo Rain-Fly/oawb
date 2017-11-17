@@ -3,23 +3,28 @@
 <mapper namespace="com.feicui.oawb.dao.DepartmentMapper">
 	
 	<!-- 添加部门 -->
-	<select id="insertDepartment" parameterType="department">
+	<insert id="insertDepartment" parameterType="department">
 		INSERT INTO department(NAME,author,updater,createTime,createDate,updateDate) 
 		VALUES(#{name},#{author},#{updater},#{createTime},#{createDate},#{updateDate})
-	</select>
+	</insert>
 	
 	<!-- 修改部门信息 -->
-	<select id="updateDepartment" parameterType="department">
+	<update id="updateDepartment" parameterType="department">
 		UPDATE department SET NAME=#{name},updater=#{updater},updateDate=#{updateDate} WHERE id=#{id}
-	</select>
+	</update>
 	
-	<!-- 根据部门编号删除部门 -->
-	<select id="deleteDepartment" parameterType="int">
-		DELETE FROM department WHERE id=#{id}
-	</select>
+	<!-- 根据部门编号删除部门(假删除) -->
+	<update id="deleteDepartment" parameterType="department">
+		UPDATE department SET isDeleted=1,updater=#{updater},updateDate=#{updateDate} WHERE id=#{id}
+	</update>
 	
 	<!-- 根据部门编号查询部门信息 -->
 	<select id="queryDepartmentInfoByID" parameterType="int" resultType="department">
 		SELECT * FROM department WHERE id=#{id}
+	</select>
+	
+	<!-- 查询所有的部门信息 -->
+	<select id="queryAllDepartments" resultType="department">
+		SELECT * FROM department where isDeleted=0
 	</select>
 </mapper>
