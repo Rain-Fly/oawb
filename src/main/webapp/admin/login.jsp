@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP '1ogin2.jsp' starting page</title>
+    <title>登录页面</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -20,6 +20,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	<script src="${pageContext.request.contextPath } /admin/js/jquery-1.9.1.js"></script> 
+<script type="text/javascript">
+    //刷新验证码：重新给图片的src赋值，后边加时间，防止缓存 
+    function randomcode_refresh() {
+        $("#randomcode_img").attr('src',
+                '${pageContext.request.contextPath }/admin/validatecode.jsp?time' + new Date().getTime());
+    }
+</script>
 
   </head>
   
@@ -34,8 +42,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<br/>
     	<input id="randomCode" name="randomCode" size="8" /> <img
 								id="randomcode_img" src="${pageContext.request.contextPath }/admin/validatecode.jsp" alt=""
-								width="56" height="20" align='absMiddle' /> <a
-								href=javascript:randomcode_refresh()>刷新</a>
+								width="56" height="20" align='absMiddle' /> 
+								<a href="javascript:randomcode_refresh()">刷新</a>
 		<br/>
     	<input type="reset" value="重置"/> &nbsp;&nbsp;<input type="submit" value="登录"/>
     </form>

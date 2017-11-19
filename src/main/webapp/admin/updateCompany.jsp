@@ -34,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	联系人：
     	<select name="linkMan">
     		<c:forEach items="${users }" var="user">
-    			<option id="${user.account }" 
+    			<option value="${user.account }" 
     				<c:if test="${ user.account.equals(company.linkMan)}">selected="selected"</c:if>>
     				${user.realName }
     			</option>
