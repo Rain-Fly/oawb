@@ -25,7 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     //刷新验证码：重新给图片的src赋值，后边加时间，防止缓存 
     function randomcode_refresh() {
         $("#randomcode_img").attr('src',
-                '${pageContext.request.contextPath }/admin/validatecode.jsp?time' + new Date().getTime());
+                '${pageContext.request.contextPath }/admin/validatecode.jsp?time=' + new Date().getTime());
     }
 </script>
 
