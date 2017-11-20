@@ -3,7 +3,7 @@
 <mapper namespace="com.feicui.oawb.dao.UserMapper">
 
 	<!-- 根据用户账号查询用户信息 -->
-	<select id="queryUserByInfo" parameterType="java.lang.String" resultType="com.feicui.oawb.po.User">
+	<select id="queryUserByAccount" parameterType="java.lang.String" resultType="com.feicui.oawb.po.User">
 		select * from user where account=#{account}
 	</select>
 	
@@ -37,5 +37,32 @@
 	<select id="queryAllUsers" resultType="user">
 		select * from user where isDeleted=0
 	</select>
-
+	
+	<!-- 添加用户 -->
+	<insert id="insertUser" parameterType="user">
+		INSERT INTO USER(account,password,realName,salt,author,updater,createTime,createDate,
+						updateDate,tel,email,sex,deptID,companyID)
+		VALUES(#{account},#{password},#{realName},#{salt},#{author},#{updater},#{createTime},#{createDate},
+						#{updateDate},#{tel},#{email},#{sex},#{deptID},#{companyID})
+	</insert>
+	
+	<!-- 删除用户 -->
+	<delete id="deleteUser" parameterType="string">
+		UPDATE USER SET isDeleted=1 WHERE account=#{account}
+	</delete>
+	
+	<!-- 修改用户信息 -->
+	<update id="updateUser" parameterType="user">
+		UPDATE user
+		SET realName=#{realName},tel=#{tel},email=#{email},sex=#{sex},deptID=#{deptID},
+			companyID=#{companyID},updater=#{updater},updateDate=#{updateDate}
+		WHERE account=#{account}
+	</update>
+	
+	<!-- 重置密码 -->
+	<update id="resetPassword" parameterType="user">
+		UPDATE USER 
+		SET PASSWORD=#{password},salt=#{salt}
+		WHERE account=#{account}
+	</update>
 </mapper>

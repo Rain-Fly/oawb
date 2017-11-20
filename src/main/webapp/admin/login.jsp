@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -20,14 +20,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<script src="${pageContext.request.contextPath } /admin/js/jquery-1.9.1.js"></script> 
-<script type="text/javascript">
-    //刷新验证码：重新给图片的src赋值，后边加时间，防止缓存 
-    function randomcode_refresh() {
-        $("#randomcode_img").attr('src',
-                '${pageContext.request.contextPath }/admin/validatecode.jsp?time=' + new Date().getTime());
-    }
-</script>
+	<script src="${pageContext.request.contextPath }/admin/js/jquery-3.2.1.min.js"></script> 
+	<script type="text/javascript">
+    	$(function(){
+        	//刷新验证码：重新给图片的src赋值，后边加时间，防止缓存 
+    		$("#randomcode_img").click(function(){
+    			$(this).attr('src',
+                	'${pageContext.request.contextPath }/admin/validatecode.jsp?time=' + new Date().getTime());
+    		});
+    	});
+	</script>
 
   </head>
   
@@ -40,10 +42,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<br/>
     	password:<input type="password" name="password" placeholder="请输入您的密码"/>
     	<br/>
-    	<input id="randomCode" name="randomCode" size="8" /> <img
-								id="randomcode_img" src="${pageContext.request.contextPath }/admin/validatecode.jsp" alt=""
+    	<input id="randomCode" name="randomCode" size="8" /> 
+    	<img id="randomcode_img" src="${pageContext.request.contextPath }/admin/validatecode.jsp" alt=""
 								width="56" height="20" align='absMiddle' /> 
-								<a href="javascript:randomcode_refresh()">刷新</a>
 		<br/>
     	<input type="reset" value="重置"/> &nbsp;&nbsp;<input type="submit" value="登录"/>
     </form>

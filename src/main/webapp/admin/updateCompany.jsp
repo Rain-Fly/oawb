@@ -33,12 +33,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<br/>
     	联系人：
     	<select name="linkMan">
-    		<c:forEach items="${users }" var="user">
-    			<option value="${user.account }" 
-    				<c:if test="${ user.account.equals(company.linkMan)}">selected="selected"</c:if>>
-    				${user.realName }
-    			</option>
-    		</c:forEach>
+    	<c:forEach items="${users }" var="user">
+    		<option value="${user.account }" 
+    			<c:if test="${ user.account.equals(company.linkMan)}">selected="selected"</c:if>>
+    			${user.realName }
+    		</option>
+    	</c:forEach>
     	</select>
     	<br/>
     	联系电话：<input type="text" name="tel" value="${company.tel }"/>

@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Common {
+	
+	public static final int hashIterations = 10;
+	
 	/**
 	 * 获取系统当前时间
 	 * @return

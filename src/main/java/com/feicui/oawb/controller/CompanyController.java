@@ -15,6 +15,11 @@ import com.feicui.oawb.po.User;
 import com.feicui.oawb.service.CompanyService;
 import com.feicui.oawb.service.UserService;
 
+/**
+ * 公司管理
+ * @author 李琳茹
+ *
+ */
 @Controller
 @RequestMapping("/company")
 public class CompanyController {

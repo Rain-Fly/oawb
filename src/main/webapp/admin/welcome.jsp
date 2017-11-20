@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    welcome 你 ${activeUser.account }号员工,${activeUser.realName }<br>
+    welcome  ${activeUser.account }号员工,${activeUser.realName }<br>
     <a href="${pageContext.request.contextPath }/logout">退出</a> <br><br>
     <strong>部门管理</strong>
     <ul>
@@ -47,10 +47,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <strong>用户管理</strong>
     <ul>
     	<li>
-    		<a>添加用户</a>
+    		<a href="${pageContext.request.contextPath }/user/toInsertUser">添加用户</a>
     	</li>
     	<li>
-    		<a>管理用户</a>
+    		<a href="${pageContext.request.contextPath }/user/queryAllUsers">管理用户</a>
+    	</li>
+    </ul>
+    <strong>个人中心</strong>
+    <ul>
+    	<li>
+    		<a href="${pageContext.request.contextPath }/admin/resetPassword.jsp">重置密码</a>
     	</li>
     </ul>
   </body>

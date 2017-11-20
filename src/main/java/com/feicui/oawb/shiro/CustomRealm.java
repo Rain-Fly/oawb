@@ -66,7 +66,7 @@ public class CustomRealm extends AuthorizingRealm{
 		String account = (String) token.getPrincipal();
 		User user = null;
 		try {
-			user = userService.queryUserByInfo(account);
+			user = userService.queryUserByAccount(account);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
