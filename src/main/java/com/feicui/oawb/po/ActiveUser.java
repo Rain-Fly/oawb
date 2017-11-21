@@ -21,14 +21,14 @@ public class ActiveUser implements Serializable{
 	private List<Permission> permissions;//权限
 	
 	public ActiveUser(){}
-	public ActiveUser(String account, String realName, List<Permission> menus) {
+	public ActiveUser(String account, String realName, List<Permission> menus, List<Permission> permissions) {
 		super();
 		this.account = account;
 		this.realName = realName;
 		this.menus = menus;
+		this.permissions = permissions;
 	}
-
-
+	
 	public String getAccount() {
 		return account;
 	}

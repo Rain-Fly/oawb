@@ -84,8 +84,15 @@ public class CustomRealm extends AuthorizingRealm{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		ActiveUser activeUser = new ActiveUser(account, user.getRealName(), menus);
 		
+		List<Permission> permissions = null;
+		try {
+			permissions = userService.queryPermissionListByAccount(account);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		ActiveUser activeUser = new ActiveUser(account, user.getRealName(), menus, permissions);
 		SimpleAuthenticationInfo authenticationInfo = 
 				new SimpleAuthenticationInfo(activeUser, password, ByteSource.Util.bytes(salt), this.getName());
 	

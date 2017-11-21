@@ -59,5 +59,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<a href="${pageContext.request.contextPath }/admin/resetPassword.jsp">重置密码</a>
     	</li>
     </ul>
+    <strong>角色管理</strong>
+    <ul>
+    	<li>添加角色</li>
+    	<li>
+    		<a href="${pageContext.request.contextPath }/role/toRoleQuery">管理角色</a>
+    	</li>
+    </ul>
   </body>
 </html>

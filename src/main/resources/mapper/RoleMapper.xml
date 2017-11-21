@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.feicui.oawb.dao.RoleMapper">
+	
+	<!-- 查询所有的角色 -->
+	<select id="queryAllRoles" resultType="role">
+		SELECT * FROM role WHERE isDeleted=0
+	</select>
+	
+	<!-- 查询所有的权限 -->
+	<select id="queryAllPermission" resultType="permission">
+		SELECT * FROM permission WHERE isDeleted=0 ORDER BY id ASC
+	</select>
+	
+	<!-- 根据角色ID，查询该角色拥有哪些权限 -->
+	<select id="queryPermissionByRoleID" parameterType="int" resultType="permission">
+		SELECT permission.*
+		FROM permission,role_permission
+		WHERE permission.id=role_permission.permissionID 
+			AND role_permission.roleID=#{roleID}
+			AND role_permission.isDeleted=0
+			AND permission.isDeleted=0
+	</select>
+</mapper>
