@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.feicui.oawb.po.Permission;
 import com.feicui.oawb.po.Role;
+import com.feicui.oawb.po.RolePermission;
 
 /**
  * 角色管理
@@ -17,4 +18,10 @@ public interface RoleMapper {
 	public List<Permission> queryAllPermission() throws Exception;
 	//查询该角色拥有哪些权限
 	public List<Permission> queryPermissionByRoleID(int roleID) throws Exception;
+	//删除角色拥有的权限
+	public void deleteRolePermission(RolePermission rolePermission) throws Exception;
+	//插入角色拥有的权限
+	public void insertRolePermission(RolePermission rolePermission) throws Exception;
+	//更新角色拥有的权限
+	public void updateRolePermission(RolePermission rolePermission) throws Exception;
 }

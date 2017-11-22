@@ -16,4 +16,6 @@ public interface RoleService {
 	public List<Permission> queryAllPermission() throws Exception;
 	//查询该角色拥有哪些权限
 	public List<Permission> queryPermissionByRoleID(int roleID) throws Exception;
+	//修改角色拥有的权限
+	public void updateRolePermission(int roleID, String permissionIDs, String account) throws Exception;
 }

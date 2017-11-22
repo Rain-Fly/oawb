@@ -2,11 +2,14 @@ package com.feicui.oawb.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.feicui.oawb.po.ActiveUser;
 import com.feicui.oawb.po.Permission;
 import com.feicui.oawb.po.Role;
 import com.feicui.oawb.service.RoleService;
@@ -37,6 +40,13 @@ public class RoleController {
 		return "roleQuery";
 	}
 	
+	/**
+	 * 根据角色查询该角色所拥有的权限
+	 * @param roleID
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/queryPermissionByRoleID")
 	public String queryPermissionByRoleID(int roleID,Model model) throws Exception{
 		List<Role> roles = roleService.queryAllRoles();
@@ -48,5 +58,19 @@ public class RoleController {
 		model.addAttribute("roleID", roleID);
 		return "roleQuery";
 	}
-
+	
+	/**
+	 * 修改角色拥有的权限
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/updateRolePermission")
+	public String updateRolePermission(HttpServletRequest request) throws Exception{
+		int roleID = Integer.parseInt(request.getParameter("roleID"));
+		String permissionIDs = request.getParameter("permissionIDs");
+		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
+		roleService.updateRolePermission(roleID,permissionIDs,activeUser.getAccount());
+		return "forward:/welcome";
+	}
 }

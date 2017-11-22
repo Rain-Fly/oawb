@@ -24,15 +24,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="${pageContext.request.contextPath }/admin/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			$(".menu").click(function(){
+			/* $(".menu").click(function(){
 				var menu = $(".menu").is(":checked"); //返回true,false
-				alert(menu);
 				if(!menu){
-					$(".permission").removeAttr("checked");
+					$(".permission").each(function(index,element){
+						$(element).attr("checked",false);
+					});
 					$(".permission").attr("disabled",true);
 				}else{
 					$(".permission").attr("disabled",false);
 				}
+			}); */
+			$("input[type='button']").click(function(){
+				var roleID = $("select").val();
+				var permissionIDs = "";
+				$("input[name='permissionID']").each(function(index,element){
+					if($(element).is(":checked")){
+						var permissionID = $(element).val();
+						if(permissionID!=null && permissionID!=""){
+							permissionIDs = permissionIDs + permissionID + ",";
+						}
+					}
+				});
+				
+				$(location).attr("href","${pageContext.request.contextPath }/role/updateRolePermission?roleID="+roleID+"&permissionIDs="+permissionIDs);
 			});
 		});
 	</script>
@@ -52,11 +67,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</select>
     	<input type="submit" value="查询"/>
     	<br/>
+   <%--  </form>
+    <form action="${pageContext.request.contextPath }/role/updateRolePermission" method="post"> --%>
     	<c:forEach items="${permissions }" var="permission">
 	  	    <c:if test="${permission.type == 'menu' }">
 	   			<strong>${permission.name }</strong>
 	   			<br/>
-	   			<input type="checkbox" value="${permission.id }" name="permissionID" class="menu"/>显示菜单
+	   			<input type="checkbox" value="${permission.id }" name="permissionID" class="menu" 
+	   				<c:if test="${fn:contains(rolePermissions,permission) }">checked="checked"</c:if>/>
+	   			显示菜单
 	   		</c:if>
    			<c:if test="${permission.type == 'permission' }">
 				<input type="checkbox" value="${permission.id }" name="permissionID" class="permission"

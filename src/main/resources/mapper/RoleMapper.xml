@@ -21,4 +21,24 @@
 			AND role_permission.isDeleted=0
 			AND permission.isDeleted=0
 	</select>
+	
+	<!-- 删除角色拥有的权限 -->
+	<update id="deleteRolePermission" parameterType="rolePermission">
+		UPDATE role_permission
+		SET updater=#{updater},updateDate=#{updateDate},isDeleted=1
+		WHERE roleID=#{roleID}
+	</update>
+	
+	<!-- 插入角色拥有的权限 -->
+	<insert id="insertRolePermission" parameterType="rolePermission">
+		INSERT INTO role_permission(roleID,permissionID,author,updater,createTime,createDate,updateDate)
+		VALUES(#{roleID},#{permissionID},#{author},#{updater},#{createTime},#{createDate},#{updateDate})
+	</insert>
+	
+	<!-- 更新角色拥有的权限 -->
+	<update id="updateRolePermission" parameterType="rolePermission">
+		UPDATE role_permission
+		SET updater=#{updater},updateDate=#{updateDate}
+		WHERE roleID=#{roleID} AND permissionID=#{permissionID}
+	</update>
 </mapper>
