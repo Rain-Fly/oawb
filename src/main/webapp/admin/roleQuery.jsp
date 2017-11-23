@@ -24,11 +24,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="${pageContext.request.contextPath }/admin/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			/* $(".menu").click(function(){
+/* 			$(".menu").click(function(){
 				var menu = $(".menu").is(":checked"); //返回true,false
 				if(!menu){
 					$(".permission").each(function(index,element){
-						$(element).attr("checked",false);
+					console.log(element);
+					element.checked=false;
+						//$(element).attr("checked",false);
 					});
 					$(".permission").attr("disabled",true);
 				}else{
@@ -67,8 +69,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</select>
     	<input type="submit" value="查询"/>
     	<br/>
-   <%--  </form>
-    <form action="${pageContext.request.contextPath }/role/updateRolePermission" method="post"> --%>
     	<c:forEach items="${permissions }" var="permission">
 	  	    <c:if test="${permission.type == 'menu' }">
 	   			<strong>${permission.name }</strong>

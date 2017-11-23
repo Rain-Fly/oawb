@@ -61,6 +61,7 @@ public class RoleServiceImpl implements RoleService{
 				rp.setUpdater(account);
 				rp.setUpdateDate(new Date());
 				rp.setRoleID(roleID);
+				rp.setPermissionID(permission.getId());
 				roleMapper.deleteRolePermission(rp);
 			}
 			oldPermissions.add(permission.getId());
@@ -83,5 +84,59 @@ public class RoleServiceImpl implements RoleService{
 				roleMapper.insertRolePermission(rp);
 			}
 		}
+	}
+
+	//为新添加的角色,添加权限
+	@Override
+	public void insertRolePermission(int roleID, String permissionIDs, String account) throws Exception {
+		//待添加的权限的集合
+		String[] permissionStrArr = permissionIDs.split(",");
+		List<Integer> newPermissions = new ArrayList<Integer>();
+		for(String permissionStr:permissionStrArr){
+			newPermissions.add(Integer.parseInt(permissionStr));
+		}
+		//添加权限
+		for(Integer p:newPermissions){
+			RolePermission rp = new RolePermission();
+			rp.setRoleID(roleID);
+			rp.setPermissionID(p);
+			rp.setAuthor(account);
+			rp.setUpdater(account);
+			rp.setCreateTime(new Date());
+			rp.setCreateDate(new Date());
+			rp.setUpdateDate(new Date());
+			roleMapper.insertRolePermission(rp);
+		}
+	}
+
+	//根据角色名称查询角色ID
+	@Override
+	public Role queryRoleIDByName(String name) throws Exception {
+		return roleMapper.queryRoleIDByName(name);
+	}
+
+	@Override
+	public void updateRoleUnavailable(Role role) throws Exception {
+		roleMapper.updateRoleUnavailable(role);
+	}
+
+	/**
+	 * 添加角色,及角色拥有的权限
+	 */
+	@Override
+	public void insertRole(String name, String permissionIDs, String account) throws Exception {
+		//添加角色
+		Role role = new Role();
+		role.setName(name);
+		role.setAuthor(account);
+		role.setUpdater(account);
+		role.setCreateTime(new Date());
+		role.setCreateDate(new Date());
+		role.setUpdateDate(new Date());
+		roleMapper.insertRole(role);
+		//获取角色ID
+		int roleID = roleMapper.queryRoleIDByName(name).getId();
+		//为该角色添加权限
+		insertRolePermission(roleID, permissionIDs, account);
 	}
 }

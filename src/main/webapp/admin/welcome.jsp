@@ -61,9 +61,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </ul>
     <strong>角色管理</strong>
     <ul>
-    	<li>添加角色</li>
     	<li>
-    		<a href="${pageContext.request.contextPath }/role/toRoleQuery">管理角色</a>
+    		<a href="${pageContext.request.contextPath }/role/toInsertRole">添加角色</a>
+    	</li>
+    	<li>
+    		<a href="${pageContext.request.contextPath }/role/toRoleQuery">角色权限</a>
+    	</li>
+    	<li>
+    		<a href="${pageContext.request.contextPath }/role/queryAllRoles">角色列表</a>
     	</li>
     </ul>
   </body>

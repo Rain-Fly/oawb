@@ -26,7 +26,7 @@
 	<update id="deleteRolePermission" parameterType="rolePermission">
 		UPDATE role_permission
 		SET updater=#{updater},updateDate=#{updateDate},isDeleted=1
-		WHERE roleID=#{roleID}
+		WHERE roleID=#{roleID} AND permissionID=#{permissionID}
 	</update>
 	
 	<!-- 插入角色拥有的权限 -->
@@ -40,5 +40,23 @@
 		UPDATE role_permission
 		SET updater=#{updater},updateDate=#{updateDate}
 		WHERE roleID=#{roleID} AND permissionID=#{permissionID}
+	</update>
+	
+	<!-- 添加角色 -->
+	<insert id="insertRole" parameterType="role">
+		INSERT INTO role(name,author,updater,createTime,createDate,updateDate)
+		VALUES(#{name},#{author},#{updater},#{createTime},#{createDate},#{updateDate})
+	</insert>
+	
+	<!-- 根据角色名称查询角色信息 -->
+	<select id="queryRoleIDByName" parameterType="string" resultType="role">
+		SELECT * FROM role WHERE NAME=#{name}
+	</select>
+	
+	<!-- 修改角色是否可用 -->
+	<update id="updateRoleUnavailable" parameterType="role">
+		UPDATE role
+		SET isAvailable=#{isAvailable},updater=#{updater},updateDate=#{updateDate}
+		WHERE id=#{id}
 	</update>
 </mapper>

@@ -18,4 +18,12 @@ public interface RoleService {
 	public List<Permission> queryPermissionByRoleID(int roleID) throws Exception;
 	//修改角色拥有的权限
 	public void updateRolePermission(int roleID, String permissionIDs, String account) throws Exception;
+	//为角色添加权限
+	public void insertRolePermission(int roleID, String permissionIDs, String account) throws Exception;
+	//根据角色名称查询角色信息
+	public Role queryRoleIDByName(String name) throws Exception;
+	//修改角色不可用
+	public void updateRoleUnavailable(Role role) throws Exception;
+	//添加角色,及角色拥有的权限
+	public void insertRole(String name, String permissionIDs, String account) throws Exception;
 }
