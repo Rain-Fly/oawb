@@ -26,4 +26,6 @@ public interface RoleService {
 	public void updateRoleUnavailable(Role role) throws Exception;
 	//添加角色,及角色拥有的权限
 	public void insertRole(String name, String permissionIDs, String account) throws Exception;
+	//根据Account查询角色
+	public List<Role> queryRoleByAccount(String account) throws Exception;
 }

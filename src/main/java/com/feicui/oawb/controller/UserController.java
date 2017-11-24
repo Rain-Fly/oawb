@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.feicui.oawb.po.ActiveUser;
 import com.feicui.oawb.po.Company;
 import com.feicui.oawb.po.Department;
+import com.feicui.oawb.po.Role;
 import com.feicui.oawb.po.User;
 import com.feicui.oawb.service.CompanyService;
 import com.feicui.oawb.service.DepartmentService;
+import com.feicui.oawb.service.RoleService;
 import com.feicui.oawb.service.UserService;
 import com.feicui.oawb.utils.Common;
 
@@ -34,6 +36,8 @@ public class UserController {
 	private DepartmentService departmentService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleService roleService;
 	
 	/**
 	 * 去添加用户页面
@@ -45,32 +49,29 @@ public class UserController {
 	public String toInsertUser(Model model) throws Exception{
 		List<Company> companies = companyService.queryAllCompanies();
 		List<Department> departments = departmentService.queryAllDepartments();
+		List<Role> roles = roleService.queryAllRoles();
 		model.addAttribute("companies", companies);
 		model.addAttribute("departments", departments);
+		model.addAttribute("roles", roles);
 		return "insertUser";
 	}
 	
 	/**
-	 * 添加用户
+	 * 添加用户,及用户拥有的角色信息
 	 * @param user
 	 * @param request
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping("/insertUser")
-	public String insertUser(User user,HttpServletRequest request) throws Exception{
+	public String insertUser(User user,String[] roleIDs,HttpServletRequest request) throws Exception{
+		User u = userService.queryUserByAccount(user.getAccount());
+		if(u!=null){
+			request.getSession().setAttribute("userMsg", "用户已存在,请勿重复添加!");
+			return "forward:toInsertUser";
+		}
 		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
-		user.setAuthor(activeUser.getAccount());
-		user.setUpdater(activeUser.getAccount());
-		user.setCreateTime(new Date());
-		user.setCreateDate(new Date());
-		user.setUpdateDate(new Date());
-		String salt = System.currentTimeMillis()+"";
-		user.setSalt(salt);
-		Md5Hash md5Hash = new Md5Hash(user.getPassword(), salt, Common.hashIterations);
-		user.setPassword(md5Hash.toString());
-		
-		userService.insertUser(user);
+		userService.insertUser(user,roleIDs,activeUser.getAccount());
 		return "forward:queryAllUsers";
 	}
 	
@@ -160,5 +161,54 @@ public class UserController {
 		
 		userService.resetPassword(user);
 		return "welcome";
+	}
+	
+	/**
+	 * to用户查询角色页面
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/toUserRole")
+	public String toUserRole(Model model) throws Exception{
+		List<User> users = userService.queryAllUsers();
+		List<Role> roles = roleService.queryAllRoles();
+		model.addAttribute("users", users);
+		model.addAttribute("roles", roles);
+		return "userRoleQuery";
+	}
+	
+	/**
+	 * 根据Account查询用户拥有的角色
+	 * @param account
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/queryRoleByAccount")
+	public String queryRoleByAccount(User user,Model model) throws Exception{
+		List<Role> userRoles = roleService.queryRoleByAccount(user.getAccount());
+		List<Role> roles = roleService.queryAllRoles();
+		List<User> users = userService.queryAllUsers();
+		model.addAttribute("account", user.getAccount());
+		model.addAttribute("userRoles", userRoles);
+		model.addAttribute("roles", roles);
+		model.addAttribute("users", users);
+		return "userRoleQuery";
+	}
+	
+	/**
+	 * 修改用户拥有的角色
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/updateUserRole")
+	public String updateUserRole(HttpServletRequest request) throws Exception{
+		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
+		String account = request.getParameter("account");
+		String roleIDs = request.getParameter("roleIDs");
+		userService.updateUserRole(account,roleIDs,activeUser.getAccount());
+		return "forward:/welcome";
 	}
 }

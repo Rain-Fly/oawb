@@ -20,10 +20,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+	<script src="${pageContext.request.contextPath }/admin/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			
+		});
+	</script>
   </head>
   
   <body>
+    <c:if test="${userMsg != null }">
+  		<strong>警告：</strong><font style="color:red">${userMsg }</font>
+  	</c:if>
     <form action="${pageContext.request.contextPath }/user/insertUser" method="post">
     	账号：<input type="text" name="account"/>
     	<br/>
@@ -52,6 +60,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</c:forEach>
     	</select>
     	<br/>
+    	<strong>拥有的角色：</strong>
+    	<br/>
+    	<c:forEach items="${roles }" var="role">
+    		<input type="checkbox" name="roleIDs" value="${role.id }"/>${role.name }
+    		<br/>
+    	</c:forEach>
     	<input type="reset" value="重置"/> &nbsp;&nbsp;
     	<input type="submit" value="添加"/>
     </form>

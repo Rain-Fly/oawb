@@ -30,4 +30,6 @@ public interface RoleMapper {
 	public Role queryRoleIDByName(String name) throws Exception;
 	//修改角色不可用
 	public void updateRoleUnavailable(Role role) throws Exception;
+	//根据Account查询角色
+	public List<Role> queryRoleByAccount(String account) throws Exception;
 }

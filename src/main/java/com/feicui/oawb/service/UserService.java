@@ -14,12 +14,14 @@ public interface UserService {
 	public List<Permission> queryPermissionListByAccount(String account) throws Exception;
 	//查询所有用户信息
 	public List<User> queryAllUsers() throws Exception;
-	//添加用户
-	public void insertUser(User user) throws Exception;
 	//删除用户
 	public void deleteUser(String acconut) throws Exception;
 	//修改用户信息
 	public void updateUser(User user) throws Exception;
 	//重置密码
 	public void resetPassword(User user) throws Exception;
+	//修改用户拥有的角色
+	public void updateUserRole(String account, String roleIDs, String updater) throws Exception;
+	//添加用户,及用户拥有的角色
+	public void insertUser(User user, String[] roleIDs, String account) throws Exception;
 }

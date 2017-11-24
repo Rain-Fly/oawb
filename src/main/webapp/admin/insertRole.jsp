@@ -48,6 +48,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <form action="#" method="post">
     	角色名称：<input type="text" name="name" id="name"/>
     	<br/>
+    	<br/>
+    	<strong>拥有的权限:</strong>
+    	<br/>
     	<c:forEach items="${permissions }" var="permission">
     		<c:if test="${permission.type == 'menu' }">
     			<strong>${permission.name }</strong>

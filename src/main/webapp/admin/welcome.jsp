@@ -52,6 +52,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<li>
     		<a href="${pageContext.request.contextPath }/user/queryAllUsers">管理用户</a>
     	</li>
+    	<li>
+    		<a href="${pageContext.request.contextPath }/user/toUserRole">用户角色管理</a>
+    	</li>
     </ul>
     <strong>个人中心</strong>
     <ul>
@@ -65,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<a href="${pageContext.request.contextPath }/role/toInsertRole">添加角色</a>
     	</li>
     	<li>
-    		<a href="${pageContext.request.contextPath }/role/toRoleQuery">角色权限</a>
+    		<a href="${pageContext.request.contextPath }/role/toRoleQuery">角色权限管理</a>
     	</li>
     	<li>
     		<a href="${pageContext.request.contextPath }/role/queryAllRoles">角色列表</a>

@@ -59,4 +59,10 @@
 		SET isAvailable=#{isAvailable},updater=#{updater},updateDate=#{updateDate}
 		WHERE id=#{id}
 	</update>
+	
+	<!-- 根据Account查询其拥有的角色 -->
+	<select id="queryRoleByAccount" parameterType="string" resultType="role">
+		SELECT role.* FROM user_role,role
+		WHERE account=#{account} AND user_role.roleID=role.id  AND user_role.isDeleted=0 AND role.isDeleted=0
+	</select>
 </mapper>

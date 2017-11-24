@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.feicui.oawb.po.Permission;
 import com.feicui.oawb.po.User;
+import com.feicui.oawb.po.UserRole;
 
 public interface UserMapper {
 	//根据用户账号查询用户信息
@@ -22,4 +23,10 @@ public interface UserMapper {
 	public void updateUser(User user) throws Exception;
 	//重置密码
 	public void resetPassword(User user) throws Exception;
+	//修改用户角色信息
+	public void updateUserRole(UserRole userRole) throws Exception;
+	//删除用户角色信息
+	public void deleteUserRole(UserRole userRole) throws Exception;
+	//添加用户角色信息
+	public void insertUserRole(UserRole userRole) throws Exception;
 }

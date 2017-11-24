@@ -139,4 +139,9 @@ public class RoleServiceImpl implements RoleService{
 		//为该角色添加权限
 		insertRolePermission(roleID, permissionIDs, account);
 	}
+
+	@Override
+	public List<Role> queryRoleByAccount(String account) throws Exception {
+		return roleMapper.queryRoleByAccount(account);
+	}
 }

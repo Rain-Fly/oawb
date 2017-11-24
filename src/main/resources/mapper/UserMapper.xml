@@ -65,4 +65,24 @@
 		SET PASSWORD=#{password},salt=#{salt}
 		WHERE account=#{account}
 	</update>
+	
+	<!-- 修改用户角色信息 -->
+	<update id="updateUserRole" parameterType="userRole">
+		UPDATE user_role
+		SET updater=#{updater},updateDate=#{updateDate}
+		WHERE account=#{account} AND roleID=#{roleID}
+	</update>
+	
+	<!-- 删除用户角色信息 -->
+	<update id="deleteUserRole" parameterType="userRole">
+		UPDATE user_role
+		SET updater=#{updater},updateDate=#{updateDate},isDeleted=1
+		WHERE account=#{account} AND roleID=#{roleID}
+	</update>
+	
+	<!-- 添加用户角色信息 -->
+	<insert id="insertUserRole" parameterType="userRole">
+		INSERT INTO user_role(account,roleID,author,updater,createTime,createDate,updateDate)
+		VALUES(#{account},#{roleID},#{author},#{updater},#{createTime},#{createDate},#{updateDate})
+	</insert>
 </mapper>
