@@ -3,6 +3,7 @@ package com.feicui.oawb.shiro;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -97,5 +98,11 @@ public class CustomRealm extends AuthorizingRealm{
 				new SimpleAuthenticationInfo(activeUser, password, ByteSource.Util.bytes(salt), this.getName());
 	
 		return authenticationInfo;
+	}
+	
+	//清除缓存
+	public void clearCached(){
+		PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
+		super.clearCache(principals);
 	}
 }

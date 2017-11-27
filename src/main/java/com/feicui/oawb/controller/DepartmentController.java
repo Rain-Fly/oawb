@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,7 @@ public class DepartmentController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/insertDepartment")
+	@RequiresPermissions("department:insert")
 	public String insertDepartment(Department department,HttpServletRequest request) throws Exception{
 		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
 		department.setAuthor(activeUser.getAccount());
@@ -52,6 +55,7 @@ public class DepartmentController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/toUpdateDepartment")
+	@RequiresPermissions("department:update")
 	public String toUpdateDepartment(int id,Model model) throws Exception{
 		Department department = departmentService.queryDepartmentInfoByID(id);
 		model.addAttribute("department", department);
@@ -66,6 +70,7 @@ public class DepartmentController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/updateDepartment")
+	@RequiresPermissions("department:update")
 	public String updateDepartment(Department department,HttpServletRequest request) throws Exception{
 		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
 		department.setUpdater(activeUser.getAccount());
@@ -82,6 +87,7 @@ public class DepartmentController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/queryAllDepartments")
+	@RequiresPermissions("department:query")
 	public String queryAllDepartments(Model model) throws Exception{
 		List<Department> departments = departmentService.queryAllDepartments();
 		model.addAttribute("departments", departments);
@@ -90,6 +96,7 @@ public class DepartmentController {
 	
 	//根据部门编号删除部门
 	@RequestMapping("/deleteDepartment")
+	@RequiresPermissions("department:delete")
 	public String deleteDepartment(int id,HttpServletRequest request) throws Exception{
 		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
 		Department department = departmentService.queryDepartmentInfoByID(id);

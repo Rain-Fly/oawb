@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -63,9 +64,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			<fmt:formatDate value="${company.updateDate }" pattern="yyyy-MM-dd"/>
     		</td>
     		<td>
-    			<a href="${pageContext.request.contextPath }/company/toUpdateCompany?id=${company.id}">修改</a>
+    			<shiro:hasPermission name="company:update">
+    				<a href="${pageContext.request.contextPath }/company/toUpdateCompany?id=${company.id}">修改</a>
+    			</shiro:hasPermission>
     			&nbsp;&nbsp;
-    			<a href="${pageContext.request.contextPath }/company/deleteCompany?id=${company.id}" onclick="return confirm('是否确定删除?')">删除</a>
+    			<shiro:hasPermission name="company:delete">
+    				<a href="${pageContext.request.contextPath }/company/deleteCompany?id=${company.id}" onclick="return confirm('是否确定删除?')">删除</a>
+    			</shiro:hasPermission>
     		</td>
     	</tr>
     </c:forEach>

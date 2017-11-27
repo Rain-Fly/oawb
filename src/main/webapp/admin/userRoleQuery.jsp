@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -54,15 +55,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		</select>
 	  	<input type="submit" value="查询"/>
 		<br/>
-		<strong>角色</strong>
-		<br/>
-		<c:forEach items="${roles }" var="role">
-			<input type="checkbox" name="roleID" value="${role.id }" 
-				<c:if test="${fn:contains(userRoles,role) }">checked="checked"</c:if>/>
-			${role.name }
+		<shiro:hasPermission name="user:updateRole">
+			<strong>角色</strong>
 			<br/>
-		</c:forEach>
-		<input type="button" value="修改"/>
+			<c:forEach items="${roles }" var="role">
+				<input type="checkbox" name="roleID" value="${role.id }" 
+					<c:if test="${fn:contains(userRoles,role) }">checked="checked"</c:if>/>
+				${role.name }
+				<br/>
+			</c:forEach>
+			<input type="button" value="修改"/>
+		</shiro:hasPermission>
   	</form>
   </body>
 </html>

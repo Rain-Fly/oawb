@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -47,7 +48,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			<th>创建日期</th>
   			<th>修改日期</th>
   			<th>是否可用</th>
-  			<th>修改</th>
+  			<shiro:hasPermission name="role:updateIsAvailable">
+  				<th>修改</th>
+  			</shiro:hasPermission>
   		</tr>
   		<c:forEach items="${roles }" var="role">
   		<tr>
@@ -70,9 +73,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				<input type="checkbox" name="isAvailable" id="isAvailable${role.id}"
   					<c:if test="${role.isAvailable == '是' }">checked="checked"</c:if>/>是
   			</td>
-  			<td>
-  				<input type="button" value="修改" text="${role.id}" />
-  			</td>
+  			<shiro:hasPermission name="role:updateIsAvailable">
+	  			<td>
+	  				<input type="button" value="修改" text="${role.id}" />
+	  			</td>
+  			</shiro:hasPermission>
   		</tr>
   		</c:forEach>
   	</table>

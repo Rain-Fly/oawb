@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +37,7 @@ public class CompanyController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/toInsertCompany")
+	@RequiresPermissions("company:insert")
 	public String toInsertCompany(Model model) throws Exception{
 		List<User> users = userService.queryAllUsers();
 		model.addAttribute("users", users);
@@ -50,6 +52,7 @@ public class CompanyController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/insertCompany")
+	@RequiresPermissions("company:insert")
 	public String insertCompany(Company company,HttpServletRequest request) throws Exception{
 		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
 		company.setAuthor(activeUser.getAccount());
@@ -68,6 +71,7 @@ public class CompanyController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/queryAllCompanies")
+	@RequiresPermissions("company:query")
 	public String queryAllCompanies(Model model) throws Exception{
 		List<Company> companies = companyService.queryAllCompanies();
 		model.addAttribute("companies", companies);
@@ -75,6 +79,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/toUpdateCompany")
+	@RequiresPermissions("company:update")
 	public String toUpdateCompany(String id,Model model) throws Exception{
 		Company company = companyService.queryCompanyById(id);
 		List<User> users = userService.queryAllUsers();
@@ -84,6 +89,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/updateCompany")
+	@RequiresPermissions("company:update")
 	public String updateCompany(Company company,HttpServletRequest request) throws Exception{
 		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
 		company.setUpdater(activeUser.getAccount());
@@ -94,6 +100,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/deleteCompany")
+	@RequiresPermissions("company:delete")
 	public String deleteCompany(String id,HttpServletRequest request) throws Exception{
 		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
 		Company company = companyService.queryCompanyById(id);

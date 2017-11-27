@@ -20,7 +20,7 @@
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login" />
 		<property name="successUrl" value="/welcome"/>
-		<property name="unauthorizedUrl" value="/admin/refuse.jsp" />
+		<property name="unauthorizedUrl" value="/admin/error/refuse.jsp" />
 		<!-- 自定义filter配置 -->
 		<property name="filters">
 			<map>
@@ -29,19 +29,10 @@
 		</property>
 		<property name="filterChainDefinitions">
 			<value>
-<!-- 				/admin/validatecode.jsp = anon
-				/admin/login.jsp = anon
-				
-				/login.action = authc
-				
-				/welcome.action = authc
-				/admin/welcome.jsp = authc
-				
-				/logout.action = logout
-				
-				/** = authc -->
 				/admin/validatecode.jsp = anon
 				/logout = logout
+				/admin/error/404.jsp = anon
+				/admin/error/500.jsp = anon
 				/** = authc
 			</value>
 		</property>

@@ -11,12 +11,15 @@ import com.feicui.oawb.po.Permission;
 import com.feicui.oawb.po.Role;
 import com.feicui.oawb.po.RolePermission;
 import com.feicui.oawb.service.RoleService;
+import com.feicui.oawb.shiro.CustomRealm;
 
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService{
 	@Autowired
 	private RoleMapper roleMapper;
+	@Autowired
+	private CustomRealm customRealm;
 
 	@Override
 	public List<Role> queryAllRoles() throws Exception {
@@ -84,6 +87,9 @@ public class RoleServiceImpl implements RoleService{
 				roleMapper.insertRolePermission(rp);
 			}
 		}
+		
+		//修改当前登录用户的权限后,清除用户权限
+		customRealm.clearCached();
 	}
 
 	//为新添加的角色,添加权限

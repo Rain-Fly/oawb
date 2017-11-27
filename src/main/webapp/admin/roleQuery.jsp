@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -69,22 +70,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</select>
     	<input type="submit" value="查询"/>
     	<br/>
-    	<c:forEach items="${permissions }" var="permission">
-	  	    <c:if test="${permission.type == 'menu' }">
-	   			<strong>${permission.name }</strong>
-	   			<br/>
-	   			<input type="checkbox" value="${permission.id }" name="permissionID" class="menu" 
-	   				<c:if test="${fn:contains(rolePermissions,permission) }">checked="checked"</c:if>/>
-	   			显示菜单
-	   		</c:if>
-   			<c:if test="${permission.type == 'permission' }">
-				<input type="checkbox" value="${permission.id }" name="permissionID" class="permission"
-					<c:if test="${fn:contains(rolePermissions,permission) }">checked="checked"</c:if>/>
-				${permission.name }
-			</c:if>
-			<br/>
-    	</c:forEach>
-    	<input type="button" value="修改"/>
+    	<shiro:hasPermission name="role:updatePermission">
+	    	<c:forEach items="${permissions }" var="permission">
+		  	    <c:if test="${permission.type == 'menu' }">
+		   			<strong>${permission.name }</strong>
+		   			<br/>
+		   			<input type="checkbox" value="${permission.id }" name="permissionID" class="menu" 
+		   				<c:if test="${fn:contains(rolePermissions,permission) }">checked="checked"</c:if>/>
+		   			显示菜单
+		   		</c:if>
+	   			<c:if test="${permission.type == 'permission' }">
+					<input type="checkbox" value="${permission.id }" name="permissionID" class="permission"
+						<c:if test="${fn:contains(rolePermissions,permission) }">checked="checked"</c:if>/>
+					${permission.name }
+				</c:if>
+				<br/>
+	    	</c:forEach>
+	    	<input type="button" value="修改"/>
+    	</shiro:hasPermission>
     </form>
   </body>
 </html>

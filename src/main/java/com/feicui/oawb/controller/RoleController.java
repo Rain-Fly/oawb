@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,7 @@ public class RoleController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/toRoleQuery")
+	@RequiresPermissions("role:queryPermission")
 	public String toRoleQuery(Model model) throws Exception{
 		List<Role> roles = roleService.queryAllRoles();
 		List<Permission> permissions = roleService.queryAllPermission();
@@ -49,6 +51,7 @@ public class RoleController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/queryPermissionByRoleID")
+	@RequiresPermissions("role:queryPermission")
 	public String queryPermissionByRoleID(int roleID,Model model) throws Exception{
 		List<Role> roles = roleService.queryAllRoles();
 		List<Permission> permissions = roleService.queryAllPermission();
@@ -67,6 +70,7 @@ public class RoleController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/updateRolePermission")
+	@RequiresPermissions("role:updatePermission")
 	public String updateRolePermission(HttpServletRequest request) throws Exception{
 		int roleID = Integer.parseInt(request.getParameter("roleID"));
 		String permissionIDs = request.getParameter("permissionIDs");
@@ -81,6 +85,7 @@ public class RoleController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/toInsertRole")
+	@RequiresPermissions("role:insert")
 	public String toInsertRole(Model model) throws Exception{
 		List<Permission> permissions = roleService.queryAllPermission();
 		model.addAttribute("permissions", permissions);
@@ -93,6 +98,7 @@ public class RoleController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/insertRole")
+	@RequiresPermissions("role:insert")
 	public String insertRole(HttpServletRequest request) throws Exception{
 		String name = request.getParameter("name").trim();
 		String permissionIDs = request.getParameter("permissionIDs");
@@ -114,6 +120,7 @@ public class RoleController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/queryAllRoles")
+	@RequiresPermissions("role:query")
 	public String queryAllRoles(Model model) throws Exception{
 		List<Role> roles = roleService.queryAllRoles();
 		model.addAttribute("roles", roles);
@@ -127,6 +134,7 @@ public class RoleController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/updateRoleAvailable")
+	@RequiresPermissions("role:updateIsAvailable")
 	public String updateRoleAvailable(HttpServletRequest request) throws Exception{
 		int roleID = Integer.parseInt(request.getParameter("id"));
 		int isAvailableInt = Integer.parseInt(request.getParameter("isAvailable"));

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/toInsertUser")
+	@RequiresPermissions("user:insert")
 	public String toInsertUser(Model model) throws Exception{
 		List<Company> companies = companyService.queryAllCompanies();
 		List<Department> departments = departmentService.queryAllDepartments();
@@ -64,6 +66,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/insertUser")
+	@RequiresPermissions("user:insert")
 	public String insertUser(User user,String[] roleIDs,HttpServletRequest request) throws Exception{
 		User u = userService.queryUserByAccount(user.getAccount());
 		if(u!=null){
@@ -81,6 +84,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/queryAllUsers")
+	@RequiresPermissions("user:query")
 	public String queryAllUsers(Model model) throws Exception{
 		List<User> users = userService.queryAllUsers();
 		model.addAttribute("users", users);
@@ -95,6 +99,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/toUpdateUser")
+	@RequiresPermissions("user:update")
 	public String toUpdateUser(String account,Model model) throws Exception{
 		User user = userService.queryUserByAccount(account);
 		List<Company> companies = companyService.queryAllCompanies();
@@ -113,6 +118,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/updateUser")
+	@RequiresPermissions("user:update")
 	public String updateUser(User user,HttpServletRequest request) throws Exception{
 		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
 		user.setUpdater(activeUser.getAccount());
@@ -128,6 +134,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/deleteUser")
+	@RequiresPermissions("user:delete")
 	public String deleteUser(String account) throws Exception{
 		User user = userService.queryUserByAccount(account);
 		if(user!=null){
@@ -145,6 +152,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/resetPassword")
+	@RequiresPermissions("password:reset")
 	public String resetPassword(String password,String newPassword,HttpServletRequest request) throws Exception{
 		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
 		User user = userService.queryUserByAccount(activeUser.getAccount());
@@ -170,6 +178,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/toUserRole")
+	@RequiresPermissions("user:queryRole")
 	public String toUserRole(Model model) throws Exception{
 		List<User> users = userService.queryAllUsers();
 		List<Role> roles = roleService.queryAllRoles();
@@ -186,6 +195,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/queryRoleByAccount")
+	@RequiresPermissions("user:queryRole")
 	public String queryRoleByAccount(User user,Model model) throws Exception{
 		List<Role> userRoles = roleService.queryRoleByAccount(user.getAccount());
 		List<Role> roles = roleService.queryAllRoles();
@@ -204,6 +214,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/updateUserRole")
+	@RequiresPermissions("user:updateRole")
 	public String updateUserRole(HttpServletRequest request) throws Exception{
 		ActiveUser activeUser = (ActiveUser) request.getSession().getAttribute("activeUser");
 		String account = request.getParameter("account");
