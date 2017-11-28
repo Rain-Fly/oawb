@@ -44,7 +44,7 @@ public class CustomRealm extends AuthorizingRealm{
 		//根据主身份信息获取权限信息
 		List<Permission> permissionList = null;
 		try {
-			permissionList = userService.queryPermissionListByAccount(activeUser.getAccount());
+			permissionList = userService.queryAllPermissionsByAccount(activeUser.getAccount());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,6 +53,8 @@ public class CustomRealm extends AuthorizingRealm{
 		for(Permission permission:permissionList){
 			permissions.add(permission.getPercode());
 		}
+		
+		System.out.println("AllPermissions--->"+permissions.toString());
 		
 		//返回授权信息
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();

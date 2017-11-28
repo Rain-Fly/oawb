@@ -134,4 +134,8 @@ public class UserServiceImpl implements UserService {
 			userMapper.insertUserRole(userRole);
 		}
 	}
+	@Override
+	public List<Permission> queryAllPermissionsByAccount(String account) throws Exception {
+		return userMapper.queryAllPermissionsByAccount(account);
+	}
 }

@@ -15,22 +15,35 @@
 		SELECT permissionID 
 		FROM role_permission 
 		WHERE roleID IN( 
-			SELECT id roleID 
+			SELECT roleID roleID 
 			FROM user_role 
-			WHERE account=#{account}))
+			WHERE account=#{account} and isDeleted=0) and isDeleted=0) and isDeleted=0
 	</select>
 	
 	<!-- 根据用户账号查询用户权限 -->
 	<select id="queryPermissionListByAccount" parameterType="java.lang.String" resultType="com.feicui.oawb.po.Permission">
 	SELECT * 
 	FROM permission 
+	WHERE TYPE="permission" AND id IN(
+		SELECT permissionID 
+		FROM role_permission 
+		WHERE roleID IN( 
+			SELECT roleID roleID 
+			FROM user_role 
+			WHERE account=#{account} and isDeleted=0) and isDeleted=0) and isDeleted=0
+	</select>
+	
+	<!-- 根据用户账号查询所有权限 -->
+	<select id="queryAllPermissionsByAccount" parameterType="java.lang.String" resultType="com.feicui.oawb.po.Permission">
+	SELECT * 
+	FROM permission 
 	WHERE id IN(
 		SELECT permissionID 
 		FROM role_permission 
 		WHERE roleID IN( 
-			SELECT id roleID 
+			SELECT roleID roleID 
 			FROM user_role 
-			WHERE account=#{account}))
+			WHERE account=#{account} and isDeleted=0) and isDeleted=0) and isDeleted=0
 	</select>
 	
 	<!-- 查询所有用户信息 -->
